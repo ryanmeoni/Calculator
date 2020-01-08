@@ -10,4 +10,13 @@ public class Operator extends BaseClass
         this.leftChild = leftChild;
         this.rightChild = rightChild;
     }
+
+    public String stringify()
+    {
+        return "This should never happen";
+    }
+    public double compute()
+    {
+        return Double.MIN_VALUE;
+    }
 }

@@ -1,5 +1,20 @@
 package com.company;
 
-public class Operand
+public class Operand extends BaseClass
 {
+    private double operandValue;
+
+    Operand(double operandValue)
+    {
+        this.operandValue = operandValue;
+    }
+
+     public String stringify()
+     {
+         return Double.toString(this.operandValue);
+     }
+     public double compute()
+     {
+         return this.operandValue;
+     }
 }

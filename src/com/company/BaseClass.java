@@ -4,4 +4,7 @@ package com.company;
 public abstract class BaseClass
 {
     BaseClass() {}
+
+    abstract public String stringify();
+    abstract public double compute();
 }

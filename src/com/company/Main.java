@@ -8,7 +8,6 @@ public class Main {
         //Get input line from console, split input line by whitespace (later parentheses as well) delimiters
         Scanner scan = new Scanner(System.in);
         String inputLine = scan.nextLine();
-
         String[] inputTokens = inputLine.split("\\s+");
 
         for (int i = 0; i < inputTokens.length; i++)
@@ -49,15 +48,6 @@ public class Main {
                     operandList.add(testNumber);
                 }
             }
-        }
-        for (int i = 0; i < operandList.size(); i++)
-        {
-            System.out.println(operandList.get(i));
-        }
-
-        for (int i = 0; i < operatorList.size(); i++)
-        {
-            System.out.println(operatorList.get(i));
         }
     }
 }
