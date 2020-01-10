@@ -1,5 +1,6 @@
 package com.company;
 
+import javax.swing.plaf.basic.BasicEditorPaneUI;
 import java.util.*;
 
 public class Main {
@@ -19,8 +20,8 @@ public class Main {
         List<String> operatorList = new ArrayList<String>();
         List<Double> operandList = new ArrayList<Double>();
         //Variables used to help parse input
-        boolean invalidInput = false;
-        double testNumber = 0;
+        boolean validInput = true;
+        double Number = Double.MIN_VALUE;
 
         for (int i = 0; i < inputTokens.length; i++)
         {
@@ -34,18 +35,35 @@ public class Main {
             {
                 try
                 {
-                    testNumber = Double.parseDouble(inputTokens[i]);
+                    Number = Double.parseDouble(inputTokens[i]);
                 }
                 catch (NumberFormatException e)
                 {
-                    System.out.println("Invalid input, please try again.");
-                    invalidInput = true;
+                    validInput = false;
                 }
 
                 finally
                 {
-                    if (invalidInput == false)
-                    operandList.add(testNumber);
+                    if (validInput)
+                    operandList.add(Number);
+                }
+            }
+
+            //Another simple check for valid input, operand count must be exactly 1 more than the operator count.
+            if (operandList.size() - 1 != operatorList.size())
+            {
+                validInput = false;
+            }
+
+            if (validInput)
+            {
+                BaseClass leftChild;
+                BaseClass RightChild;
+                BaseClass root;
+
+                for(int i = 0; i < operatorList.size(); i++)
+                {
+
                 }
             }
         }
