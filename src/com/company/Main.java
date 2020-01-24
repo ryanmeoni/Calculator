@@ -1,6 +1,5 @@
 package com.company;
 
-import javax.swing.plaf.basic.BasicEditorPaneUI;
 import java.util.*;
 
 public class Main {
@@ -37,6 +36,7 @@ public class Main {
                 {
                     Number = Double.parseDouble(inputTokens[i]);
                 }
+
                 catch (NumberFormatException e)
                 {
                     validInput = false;
@@ -45,27 +45,62 @@ public class Main {
                 finally
                 {
                     if (validInput)
-                    operandList.add(Number);
+                    {
+                        operandList.add(Number);
+                    }
                 }
             }
+        }
 
-            //Another simple check for valid input, operand count must be exactly 1 more than the operator count.
-            if (operandList.size() - 1 != operatorList.size())
+        //Another simple check for valid input, operand count must be exactly 1 more than the operator count.
+        if (operandList.size() - 1 != operatorList.size())
+        {
+            validInput = false;
+        }
+
+        if (validInput)
+        {
+            commandArg leftChild = null;
+            commandArg RightChild = null;
+            commandArg root = null;
+
+            for (int i = 0; i < operatorList.size(); i++)
             {
-                validInput = false;
-            }
-
-            if (validInput)
-            {
-                BaseClass leftChild;
-                BaseClass RightChild;
-                BaseClass root;
-
-                for(int i = 0; i < operatorList.size(); i++)
+                //The first operator in operatorList needs the first two operands in operand list.
+                //This is only true for very first iteration. In other iterations, we build the
+                //expression tree moving upwards.
+                if (i == 0)
                 {
+                    Operand currLeftOperand = new Operand(operandList.get(0));
+                    Operand currRightOperand = new Operand(operandList.get(1));
 
+                    String firstOperator = operatorList.get(0);
+
+                    if (firstOperator.equals("+")) root = new Add(currLeftOperand, currRightOperand);
+                    if (firstOperator.equals("-")) root = new Subtract(currLeftOperand, currRightOperand);
+                    if (firstOperator.equals("/")) root = new Divide(currLeftOperand, currRightOperand);
+                    if (firstOperator.equals("*")) root = new Multiply(currLeftOperand, currRightOperand);
+                    leftChild = root;
+                }
+
+
+                //For every following operator, the previous operator node becomes the new left child, and the
+                //next operand becomes the right child.
+                else
+                {
+                    //We use the i + 1 index to get each following operand due to getting two operands
+                    //in the very first iteration of the loop.
+                    Operand currRightOperand = new Operand(operandList.get(i + 1));
+                    String currOperator = operatorList.get(i);
+                    if (currOperator.equals("+")) root = new Add(leftChild, currRightOperand);
+                    if (currOperator.equals("-")) root = new Subtract(leftChild, currRightOperand);
+                    if (currOperator.equals("/")) root = new Divide(leftChild, currRightOperand);
+                    if (currOperator.equals("*")) root = new Multiply(leftChild, currRightOperand);
+                    leftChild = root;
                 }
             }
+
+            System.out.println(root.compute());
         }
     }
 }

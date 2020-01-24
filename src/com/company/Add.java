@@ -2,7 +2,7 @@ package com.company;
 
 public class Add extends Operator
 {
-    Add(BaseClass leftChild, BaseClass rightChild)
+    Add(commandArg leftChild, commandArg rightChild)
     {
         super(leftChild, rightChild);
     }

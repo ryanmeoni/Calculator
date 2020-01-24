@@ -1,9 +1,9 @@
 package com.company;
 
 //Composite pattern base class
-public abstract class BaseClass
+public abstract class commandArg
 {
-    BaseClass() {}
+    commandArg() {}
 
     abstract public String stringify();
     abstract public double compute();

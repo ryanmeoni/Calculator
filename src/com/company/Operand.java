@@ -1,6 +1,6 @@
 package com.company;
 
-public class Operand extends BaseClass
+public class Operand extends commandArg
 {
     private double operandValue;
 

@@ -2,7 +2,7 @@ package com.company;
 
 public class Multiply extends Operator
 {
-    Multiply(BaseClass leftChild, BaseClass rightChild)
+    Multiply(commandArg leftChild, commandArg rightChild)
     {
         super(leftChild, rightChild);
     }

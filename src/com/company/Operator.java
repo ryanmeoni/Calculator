@@ -1,11 +1,11 @@
 package com.company;
 
-public class Operator extends BaseClass
+public class Operator extends commandArg
 {
-    BaseClass leftChild;
-    BaseClass rightChild;
+    commandArg leftChild;
+    commandArg rightChild;
 
-    Operator(BaseClass leftChild, BaseClass rightChild)
+    Operator(commandArg leftChild, commandArg rightChild)
     {
         this.leftChild = leftChild;
         this.rightChild = rightChild;

@@ -2,7 +2,7 @@ package com.company;
 
 public class Subtract extends Operator
 {
-    Subtract(BaseClass leftChild, BaseClass rightChild)
+    Subtract(commandArg leftChild, commandArg rightChild)
     {
         super(leftChild, rightChild);
     }
