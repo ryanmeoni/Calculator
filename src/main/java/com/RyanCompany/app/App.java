@@ -1,19 +1,17 @@
-package com.company;
+package com.RyanCompany.app;
 
 import java.util.*;
 
-public class Main {
+public class App {
 
     public static void main(String[] args) {
+	while (true)
+	{
+	System.out.println("Enter new calculator operation in format '3 + 3 - 2', with a space inbetween each argument");
         //Get input line from console, split input line by whitespace (later parentheses as well) delimiters
         Scanner scan = new Scanner(System.in);
         String inputLine = scan.nextLine();
         String[] inputTokens = inputLine.split("\\s+");
-
-        for (int i = 0; i < inputTokens.length; i++)
-        {
-            System.out.println(inputTokens[i]);
-        }
 
         //Two arrayLists to hold operators and operands in order. Used to build tree later
         List<String> operatorList = new ArrayList<String>();
@@ -101,6 +99,7 @@ public class Main {
             }
 
             System.out.println(root.compute());
+        }
         }
     }
 }

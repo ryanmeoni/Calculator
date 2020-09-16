@@ -1,4 +1,4 @@
-package com.company;
+package com.RyanCompany.app;
 
 public class Subtract extends Operator
 {
