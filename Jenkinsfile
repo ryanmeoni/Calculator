@@ -7,4 +7,5 @@ pipeline {
         stage('Compile-Package') {
             sh 'mvn package'
         }
+    }
 }
