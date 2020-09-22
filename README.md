@@ -1,4 +1,4 @@
-# A Calculator Application. To run, do the following. 
+# A Calculator Application. To run, do the following
 
 1. Clone the repo 
 2. Run ```cd Calculator```
