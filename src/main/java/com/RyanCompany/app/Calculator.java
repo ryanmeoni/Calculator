@@ -6,14 +6,14 @@ public class Calculator
 {
     Calculator() {}
 
-    // Input: Console input line as a String
-    // Output: List of two lists, one for operands and one for operators
-    public List<List<String>> parseInput(String inputLine)
+    // Inputs: Console input line as a String
+    // Outputs: List of two lists, one for operands and one for operators
+    public List<List<String>> parse_input(String inputLine)
     {
         List<List<String>> result = new ArrayList<List<String>>();
 
         // Split input line by whitespace delimiters
-        String[] inputTokens = inputLine.split("\\s+");
+        String[] inputTokens = inputLine.split("\\s+|)|(");
 
         // Two arrayLists to hold operators and operands in order. Used to build tree later
         List<String> operatorList = new ArrayList<String>();
@@ -63,9 +63,9 @@ public class Calculator
         return result;
     }
 
-    // Input: List of operands in order and list of operators in order
-    // Output: List of two lists, one for operands and one for operators
-    public commandArg buildTree(List<String> operandList, List<String> operatorList)
+    // Inputs: List of operands in order and list of operators in order
+    // Outputs: List of two lists, one for operands and one for operators
+    public commandArg build_tree(List<String> operandList, List<String> operatorList)
     {
         if (operandList == null || operatorList == null) return null;
 
