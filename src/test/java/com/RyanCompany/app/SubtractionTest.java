@@ -1,8 +1,9 @@
 package com.RyanCompany.app;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.api.Test;
 
 public class SubtractionTest
 {
@@ -10,45 +11,37 @@ public class SubtractionTest
 	private Operand operandOne; 
 	private Operand operandTwo;
 
-    // Tests that the compute() method works for subtraction
-    @Test
-    public void Test_subtraction_by_value_001()
+    // Tests that the compute() method works for addition
+    @ParameterizedTest
+    @CsvSource({
+            "5, 2, 3.0",
+            "999, 1, 998.0",
+            "-50.5, 50.5, -101.0",
+            "200.5, -3, 203.5"
+    })
+    public void subtraction_value_test(double inputOperandOne, double inputOperandTwo, double expectedResult)
     {
-    	operandOne = new Operand(5);
-    	operandTwo = new Operand(2);
-        subtractionOperator = new Subtract(operandOne, operandTwo);
-    	double computationResult = subtractionOperator.compute();
-    	assertTrue(computationResult == 3);
-    }
-
-    @Test
-    public void Test_subtraction_by_value_002()
-    {
-        operandOne = new Operand(55);
-        operandTwo = new Operand(-3);
+        operandOne = new Operand(inputOperandOne);
+        operandTwo = new Operand(inputOperandTwo);
         subtractionOperator = new Subtract(operandOne, operandTwo);
         double computationResult = subtractionOperator.compute();
-        assertTrue(computationResult == 58);
+        assertTrue(computationResult == expectedResult);
     }
 
-    // Tests that the stringify() method works for subtraction
-    @Test 
-    public void Test_subtraction_by_stringify_001()
+    // Tests that the stringify() method works for addition
+    @ParameterizedTest
+    @CsvSource({
+            "5, 2, 5.0 - 2.0",
+            "-10, 3, -10.0 - 3.0",
+            "999, -20, 999.0 - -20.0",
+            "4.2, -1.11, 4.2 - -1.11"
+    })
+    public void subtraction_stringify_test(double inputOperandOne, double inputOperandTwo, String expectedResult)
     {
-    	operandOne = new Operand(5);
-    	operandTwo = new Operand(2);
-        subtractionOperator = new Subtract(operandOne, operandTwo);
-    	String computationString = subtractionOperator.stringify();
-    	assertEquals(computationString, "5.0 - 2.0");
-    }
-
-    @Test 
-    public void Test_subtraction_by_stringify_002()
-    {
-        operandOne = new Operand(999);
-        operandTwo = new Operand(-5);
+        operandOne = new Operand(inputOperandOne);
+        operandTwo = new Operand(inputOperandTwo);
         subtractionOperator = new Subtract(operandOne, operandTwo);
         String computationString = subtractionOperator.stringify();
-        assertEquals(computationString, "999.0 - -5.0");
+        assertEquals(computationString, expectedResult);
     }
-} 
+}

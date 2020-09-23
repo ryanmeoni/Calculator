@@ -1,8 +1,9 @@
 package com.RyanCompany.app;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.api.Test;
 
 public class DivisionTest
 {
@@ -10,45 +11,37 @@ public class DivisionTest
 	private Operand operandOne; 
 	private Operand operandTwo;
 
-    // Tests that the compute() method works for divison
-    @Test
-    public void Test_division_by_value_001()
+    // Tests that the compute() method works for addition
+    @ParameterizedTest
+    @CsvSource({
+            "5, 2, 2.5",
+            "999, 1, 999.0",
+            "-50.5, 50.5, -1.0",
+            "-500, -5, 100.0"
+    })
+    public void division_value_test(double inputOperandOne, double inputOperandTwo, double expectedResult)
     {
-    	operandOne = new Operand(1);
-    	operandTwo = new Operand(4);
-        divisionOperator = new Divide(operandOne, operandTwo);
-    	double computationResult = divisionOperator.compute();
-    	assertTrue(computationResult == 0.25);
-    }
-
-    @Test
-    public void Test_division_by_value_002()
-    {
-        operandOne = new Operand(-10);
-        operandTwo = new Operand(2);
+        operandOne = new Operand(inputOperandOne);
+        operandTwo = new Operand(inputOperandTwo);
         divisionOperator = new Divide(operandOne, operandTwo);
         double computationResult = divisionOperator.compute();
-        assertTrue(computationResult == -5);
+        assertTrue(computationResult == expectedResult);
     }
 
-    // Tests that the stringify() method works for divison
-    @Test 
-    public void Test_division_by_stringify_001()
+    // Tests that the stringify() method works for addition
+    @ParameterizedTest
+    @CsvSource({
+            "5, 2, 5.0 / 2.0",
+            "-10, 3, -10.0 / 3.0",
+            "999, -20, 999.0 / -20.0",
+            "4.2, -1.11, 4.2 / -1.11"
+    })
+    public void division_stringify_test(double inputOperandOne, double inputOperandTwo, String expectedResult)
     {
-    	operandOne = new Operand(5);
-    	operandTwo = new Operand(2);
-        divisionOperator = new Divide(operandOne, operandTwo);
-    	String computationString = divisionOperator.stringify();
-    	assertEquals(computationString, "5.0 / 2.0");
-    }
-
-    @Test 
-    public void Test_division_by_stringify_002()
-    {
-        operandOne = new Operand(999);
-        operandTwo = new Operand(-5);
+        operandOne = new Operand(inputOperandOne);
+        operandTwo = new Operand(inputOperandTwo);
         divisionOperator = new Divide(operandOne, operandTwo);
         String computationString = divisionOperator.stringify();
-        assertEquals(computationString, "999.0 / -5.0");
+        assertEquals(computationString, expectedResult);
     }
 } 
