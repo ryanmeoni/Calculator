@@ -11,7 +11,7 @@ public class MultiplicationTest
 	private Operand operandOne; 
 	private Operand operandTwo;
 
-    // Tests that the compute() method works for addition
+    // Tests that the compute() method works for multiplication
     @ParameterizedTest
     @CsvSource({
             "5, 2, 10.0",
@@ -28,7 +28,7 @@ public class MultiplicationTest
         assertTrue(computationResult == expectedResult);
     }
 
-    // Tests that the stringify() method works for addition
+    // Tests that the stringify() method works for multiplication
     @ParameterizedTest
     @CsvSource({
             "5, 2, 5.0 * 2.0",

@@ -11,7 +11,7 @@ public class DivisionTest
 	private Operand operandOne; 
 	private Operand operandTwo;
 
-    // Tests that the compute() method works for addition
+    // Tests that the compute() method works for division
     @ParameterizedTest
     @CsvSource({
             "5, 2, 2.5",
@@ -28,7 +28,7 @@ public class DivisionTest
         assertTrue(computationResult == expectedResult);
     }
 
-    // Tests that the stringify() method works for addition
+    // Tests that the stringify() method works for division
     @ParameterizedTest
     @CsvSource({
             "5, 2, 5.0 / 2.0",

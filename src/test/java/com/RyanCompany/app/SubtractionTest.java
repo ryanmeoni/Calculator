@@ -11,7 +11,7 @@ public class SubtractionTest
 	private Operand operandOne; 
 	private Operand operandTwo;
 
-    // Tests that the compute() method works for addition
+    // Tests that the compute() method works for subtraction
     @ParameterizedTest
     @CsvSource({
             "5, 2, 3.0",
@@ -28,7 +28,7 @@ public class SubtractionTest
         assertTrue(computationResult == expectedResult);
     }
 
-    // Tests that the stringify() method works for addition
+    // Tests that the stringify() method works for subtraction
     @ParameterizedTest
     @CsvSource({
             "5, 2, 5.0 - 2.0",

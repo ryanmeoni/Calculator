@@ -11,7 +11,7 @@ public class InfixPostfix
     public List<String> split_string_by_parentheses(String inputString)
     {
         List<String> parsedInputString = new ArrayList<String>();
-        // Separate input string by '(' and ')' delimeters
+        // Separate input string by '(' and ')' delimiters
         StringTokenizer tokenizer = new StringTokenizer(inputString, "()", true);
 
         while (tokenizer.hasMoreTokens())
@@ -22,28 +22,26 @@ public class InfixPostfix
         return parsedInputString;
     }
 
-    // Inputs: None
+    // Inputs: Input line from console
     // Outputs: ArrayList of strings (operand, operator, or opening/closing parentheses) that were
     // parsed from original console input line. ArrayList can be viewed as 'infix' form of calculation.
-    public List<String> input_to_infix()
+    public List<String> input_to_infix(String inputLine)
     {
-        Scanner scan = new Scanner(System.in);
-        String inputLine = scan.nextLine();
         String[] inputTokens = inputLine.split("\\s+");
-        List<String> parsedInputLine = new ArrayList<String>();
+        List<String> infixList = new ArrayList<String>();
 
-        for (int i = 0; i < inputTokens.length; i++)
-        {
-            List<String> currTokenSplit = split_string_by_parentheses(inputTokens[i]);
-            for (int j = 0; j < currTokenSplit.size(); j++)
-            {
-                parsedInputLine.add(currTokenSplit.get(j));
+        for (String inputToken : inputTokens) {
+            List<String> currTokenSplit = split_string_by_parentheses(inputToken);
+            for (String s : currTokenSplit) {
+                infixList.add(s);
             }
         }
 
-        return parsedInputLine;
+        return infixList;
     }
 
+    // Inputs: current string token used in infix to postfix conversion
+    // Outputs: Precedence value of the operator. Currently all operators have same precedence.
     public int precedence(String currToken)
     {
         if ((currToken.equals("+")) || (currToken.equals("-")) || (currToken.equals("*")) || (currToken.equals("/")))
@@ -56,23 +54,25 @@ public class InfixPostfix
         }
     }
 
+    // Inputs: List of strings representing infix expression of inputted string.
+    // Outputs: List of strings representing postfix expression
     public List<String> infix_to_postfix(List<String> infixList)
     {
+        if (infixList == null)
+        {
+            System.out.println("Error, null input to infix_to_postfix()");
+            return null;
+        }
+
         Stack<String> theStack = new Stack<String>();
         List<String> postfixList = new ArrayList<String>();
 
-        for (int i = 0; i < infixList.size(); i++)
-        {
+        for (String currElement : infixList) {
 
-            String currElement = infixList.get(i);
+            if ((currElement.equals("+")) || (currElement.equals("-")) || (currElement.equals("*")) || (currElement.equals("/"))) {
 
-            if ((currElement.equals("+")) || (currElement.equals("-")) || (currElement.equals("*")) || (currElement.equals("/")))
-            {
-
-                if (theStack.size() != 0)
-                {
-                    while (precedence(currElement) <= precedence(theStack.peek()) && (theStack.size() != 0))
-                    {
+                if (theStack.size() != 0) {
+                    while (precedence(currElement) <= precedence(theStack.peek()) && (theStack.size() != 0)) {
                         String currStackTop = theStack.peek();
                         postfixList.add(currStackTop);
                         theStack.pop();
@@ -82,41 +82,27 @@ public class InfixPostfix
                 }
 
                 theStack.push(currElement);
-            }
-
-            else if (currElement.equals(")"))
-            {
-                if (theStack.size() == 0)
-                {
+            } else if (currElement.equals(")")) {
+                if (theStack.size() == 0) {
                     System.out.println("Error involving closing parentheses in infix to postfix");
-                }
-                else
-                {
-                    while ((theStack.peek().equals("(") == false) && (theStack.size() != 0))
-                    {
+                    return null;
+                } else {
+                    while ((theStack.peek().equals("(") == false) && (theStack.size() != 0)) {
                         String currStackTop = theStack.peek();
                         postfixList.add(currStackTop);
                         theStack.pop();
                     }
                 }
 
-                if (theStack.size() == 0)
-                {
+                if (theStack.size() == 0) {
                     System.out.println("Error involving closing parentheses in infix to postfix");
+                    return null;
                 }
 
-                //Remove closing parentheses
                 theStack.pop();
-            }
-
-            //Push opening parentheses
-            else if (currElement.equals("("))
-            {
+            } else if (currElement.equals("(")) {
                 theStack.push(currElement);
-            }
-
-            //Else we have command
-            else {
+            } else {
                 postfixList.add(currElement);
             }
         }
@@ -129,6 +115,7 @@ public class InfixPostfix
                 if (currStackTop.equals(")") || (currStackTop.equals("(")))
                 {
                     System.out.println("Error involving putting remaining stack elements to postfix");
+                    return null;
                 }
 
                 postfixList.add(currStackTop);
@@ -137,16 +124,24 @@ public class InfixPostfix
         return postfixList;
     }
 
-    public static commandArg postfix_to_expression_tree(List<String> postfixList) {
+    // Inputs: List of strings representing postfix expression
+    // Outputs: commandArg object serving as the root of the final expression tree
+    public commandArg postfix_to_expression_tree(List<String> postfixList) {
+
+        if (postfixList == null)
+        {
+            System.out.println("Error, null input to postfix_to_expression_tree()");
+            return null;
+        }
 
         Stack<commandArg> theStack = new Stack<commandArg>();
 
-        for (int i = 0; i < postfixList.size(); i++)
-        {
-            String currElement = postfixList.get(i);
+        for (String currElement : postfixList) {
 
-            if (currElement.equals("+"))
-            {
+            // Handle all operators. If stack top is operator,
+            if (currElement.equals("+")) {
+                if (theStack.size() < 2) return null;
+
                 commandArg rightChild = theStack.peek();
                 theStack.pop();
                 commandArg leftChild = theStack.peek();
@@ -155,9 +150,9 @@ public class InfixPostfix
                 commandArg additionOperator = new Add(leftChild, rightChild);
 
                 theStack.push(additionOperator);
-            }
-            else if (currElement.equals("-"))
-            {
+            } else if (currElement.equals("-")) {
+                if (theStack.size() < 2) return null;
+
                 commandArg rightChild = theStack.peek();
                 theStack.pop();
                 commandArg leftChild = theStack.peek();
@@ -166,9 +161,9 @@ public class InfixPostfix
                 commandArg subtractionOperator = new Subtract(leftChild, rightChild);
 
                 theStack.push(subtractionOperator);
-            }
-            else if (currElement.equals("*"))
-            {
+            } else if (currElement.equals("*")) {
+                if (theStack.size() < 2) return null;
+
                 commandArg rightChild = theStack.peek();
                 theStack.pop();
                 commandArg leftChild = theStack.peek();
@@ -177,9 +172,9 @@ public class InfixPostfix
                 commandArg multiplyOperator = new Multiply(leftChild, rightChild);
 
                 theStack.push(multiplyOperator);
-            }
-            else if (currElement.equals("/"))
-            {
+            } else if (currElement.equals("/")) {
+                if (theStack.size() < 2) return null;
+
                 commandArg rightChild = theStack.peek();
                 theStack.pop();
                 commandArg leftChild = theStack.peek();
@@ -190,18 +185,23 @@ public class InfixPostfix
                 theStack.push(divideOperator);
             }
 
-            //else we found command. Create it and push to stack.
-            else
-            {
-                Double operandValue = Double.parseDouble(currElement);
-                commandArg operand = new Operand(operandValue);
-                theStack.push(operand);
+            //else we found operand. Create it and push to stack.
+            else {
+                try
+                {
+                    double operandValue = Double.parseDouble(currElement);
+                    commandArg operand = new Operand(operandValue);
+                    theStack.push(operand);
+                }
+                catch (NumberFormatException exception)
+                {
+                    System.out.println("Error in converting String to double in postfix_to_expression_tree()");
+                    return null;
+                }
             }
         }
 
-        //Top of stack at end of postfix expression to expression tree building should be our root.
-        commandArg treeRoot = theStack.peek();
-        return treeRoot;
-
+        //Top of stack at end of building expression tree should be our root.
+        return theStack.peek();
     }
 }
